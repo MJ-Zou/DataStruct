@@ -36,6 +36,7 @@ public class UtilsMethod {
         array[b] = tem;
     }
 
+    //全组合
     static void combine(String chs[], List<LinkedList<String>> comb) {
         if (chs.length == 0) return;
         LinkedList<String>list=new LinkedList<>();
