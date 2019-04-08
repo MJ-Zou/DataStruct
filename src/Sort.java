@@ -6,7 +6,7 @@ public class Sort {
 
     //***********************************************//
     //1.冒泡排序
-    static void bubbleSort(int[] arr) {
+    private static void bubbleSort(int[] arr) {
         int n = arr.length;
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
@@ -17,31 +17,33 @@ public class Sort {
         }
     }
 
-    //2.简单选择排序
-    static void xuanze(List<Integer> list) {
-        int n = list.size();
-        for (int i = 0; i < n - 2; i++) {
-            int min = list.get(i);
-            int i_min = i;
-            for (int j = i; j < n; j++) {
-                if (list.get(j) < min) {
-                    min = list.get(j);
+    //2.选择排序
+    private static void selectSort(int[] arr) {
+        int n = arr.length;
+        int min;
+        int i_min;
+        for (int i = 0; i < n - 1; i++) {
+            min = arr[i];
+            i_min = i;
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < min) {
+                    min = arr[j];
                     i_min = j;
                 }
             }
             if (i != i_min) {
-                swap(list, i, i_min);
+                swap(arr, i, i_min);
             }
         }
     }
 
     //3.直接插入排序
-    static void charu(List<Integer> list) {
-        int n = list.size();
+    private static void insertionSort(int[] arr) {
+        int n = arr.length;
         for (int i = 1; i < n; i++) {
             int j = i;
-            while (j > 0 && list.get(j) < list.get(j - 1)) {
-                swap(list, j, j - 1);
+            while (j > 0 && arr[j] < arr[j - 1]) {
+                swap(arr, j, j - 1);
                 j--;
             }
         }
@@ -129,29 +131,29 @@ public class Sort {
     }
 
     public static void main(String[] args) {
-        int[] arr = {5, 4, 6, 8, 5, 4, 1, 8, 6};
-        System.out.println(Arrays.toString(arr));
-        bubbleSort(arr);
-        System.out.println(Arrays.toString(arr));
+        int[] arr1 = {5, 4, 6, 8, 5, 4, 1, 8, 6};
+        System.out.println(Arrays.toString(arr1));
+        bubbleSort(arr1);
+        System.out.println(Arrays.toString(arr1));
 
-        List list = createList("17328153713784689");
-        System.out.println(list);
-        xuanze(list);
-        System.out.println(list);
+        int[] arr2 = {1, 7, 3, 2, 8, 1, 5, 3, 7, 1, 3, 78, 4, 6, 8, 9};
+        System.out.println(Arrays.toString(arr2));
+        selectSort(arr2);
+        System.out.println(Arrays.toString(arr2));
 
-        list = createList("40573289361");
-        System.out.println(list);
-        charu(list);
-        System.out.println(list);
-
-        list = createList("12371865477984132");
-        System.out.println(list);
-        xier(list);
-        System.out.println(list);
-
-        list = createList("71358758146");
-        System.out.println(list);
-        kuaisu(list);
-        System.out.println(list);
+        int[] arr3 = {4, 0, 5, 7, 3, 2, 89, 3, 6, 1};
+        System.out.println(Arrays.toString(arr3));
+        insertionSort(arr3);
+        System.out.println(Arrays.toString(arr3));
+//
+//        list = createList("12371865477984132");
+//        System.out.println(list);
+//        xier(list);
+//        System.out.println(list);
+//
+//        list = createList("71358758146");
+//        System.out.println(list);
+//        kuaisu(list);
+//        System.out.println(list);
     }
 }
