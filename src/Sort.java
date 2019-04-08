@@ -1,16 +1,17 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Sort {
 
     //***********************************************//
     //1.冒泡排序
-    static void maopao(List<Integer> list) {
-        int n = list.size();
+    static void bubbleSort(int[] arr) {
+        int n = arr.length;
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
-                if (list.get(j) > list.get(j + 1)) {
-                    swap(list, j, j + 1);
+                if (arr[j] > arr[j + 1]) {
+                    swap(arr, j, j + 1);
                 }
             }
         }
@@ -82,7 +83,7 @@ public class Sort {
             return;
         }
         int base = list.get(start);
-        int i = start ;
+        int i = start;
         int j = stop;
         while (i != j) {
             while (list.get(j) >= base && j > i) {
@@ -96,7 +97,7 @@ public class Sort {
             }
             swap(list, i, j);
         }
-            swap(list, i, start);
+        swap(list, i, start);
 
         subKuaisu(list, start, i - 1);
         subKuaisu(list, i + 1, stop);
@@ -121,13 +122,19 @@ public class Sort {
         list.set(j, temp);
     }
 
-    public static void main(String[] args) {
-        List list = createList("546854186");
-        System.out.println(list);
-        maopao(list);
-        System.out.println(list);
+    static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
 
-        list = createList("17328153713784689");
+    public static void main(String[] args) {
+        int[] arr = {5, 4, 6, 8, 5, 4, 1, 8, 6};
+        System.out.println(Arrays.toString(arr));
+        bubbleSort(arr);
+        System.out.println(Arrays.toString(arr));
+
+        List list = createList("17328153713784689");
         System.out.println(list);
         xuanze(list);
         System.out.println(list);
