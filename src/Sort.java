@@ -40,10 +40,11 @@ public class Sort {
     //3.直接插入排序
     private static void insertionSort(int[] arr) {
         int n = arr.length;
+        int j;
         for (int i = 1; i < n; i++) {
-            int j = i;
-            while (j > 0 && arr[j] < arr[j - 1]) {
-                swap(arr, j, j - 1);
+            j = i;
+            while (j > 0 && arr[j - 1] > arr[j]) {
+                swap(arr, j - 1, j);
                 j--;
             }
         }
@@ -75,37 +76,29 @@ public class Sort {
     */
 
     //7.快速排序(改进冒泡排序)
-    static void kuaisu(List<Integer> list) {
-        int n = list.size();
-        subKuaisu(list, 0, n - 1);
-    }
-
-    static void subKuaisu(List<Integer> list, int start, int stop) {
+    private static void quickSort(int[] arr, int start, int stop) {
         if (stop - start < 1) {
             return;
         }
-        int base = list.get(start);
+        int base = arr[start];
         int i = start;
         int j = stop;
         while (i != j) {
-            while (list.get(j) >= base && j > i) {
+            while (arr[j] >= base && j > i) {
                 j--;
             }
-            while (list.get(i) <= base && i < j) {
+            while (arr[i] <= base && i < j) {
                 i++;
             }
             if (i == j) {
                 break;
             }
-            swap(list, i, j);
+            swap(arr, i, j);
         }
-        swap(list, i, start);
-
-        subKuaisu(list, start, i - 1);
-        subKuaisu(list, i + 1, stop);
-
+        swap(arr, i, start);
+        quickSort(arr, start, i - 1);
+        quickSort(arr, i + 1, stop);
     }
-
 
     //创建数组
     static List<Integer> createList(String string) {
@@ -151,9 +144,9 @@ public class Sort {
 //        xier(list);
 //        System.out.println(list);
 //
-//        list = createList("71358758146");
-//        System.out.println(list);
-//        kuaisu(list);
-//        System.out.println(list);
+        int[] arr5 = {7,1,3,5,87,5,8,1,4,6};
+        System.out.println(Arrays.toString(arr5));
+        quickSort(arr5,0,arr5.length-1);
+        System.out.println(Arrays.toString(arr5));
     }
 }
