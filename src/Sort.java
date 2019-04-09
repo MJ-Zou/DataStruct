@@ -49,7 +49,7 @@ public class Sort {
     }
 
     //**************************************************************//
-    //4.希尔排序(改进直接插入排序)
+    //4.希尔排序(改进直接插入排序)有问题
     private static void shellSort(int[] arr) {
         int n = arr.length;
         int increment = n;
@@ -75,27 +75,27 @@ public class Sort {
 
     //7.快速排序(改进冒泡排序)
     private static void quickSort(int[] arr, int start, int stop) {
-        if (stop - start < 1) {
+        if (start >= stop) {
             return;
         }
-        int base = arr[start];
-        int i = start;
-        int j = stop;
-        while (true) {
-            while (arr[j] >= base && j > i) {
-                j--;
+        int mid = arr[start];
+        int low = start;
+        int high = stop;
+        while (low < high) {
+            while (mid <= arr[high] && low < high) {
+                high--;
             }
-            while (arr[i] <= base && i < j) {
-                i++;
+            while (arr[low] <= mid && low < high) {
+                low++;
             }
-            if (i == j) {
-                break;
+            if (low < high) {
+                swap(arr, low, high);
             }
-            swap(arr, i, j);
+
         }
-        swap(arr, i, start);
-        quickSort(arr, start, i - 1);
-        quickSort(arr, i + 1, stop);
+        swap(arr, low, start);
+        quickSort(arr, start, low - 1);
+        quickSort(arr, high + 1, stop);
     }
 
     private static void swap(int[] arr, int i, int j) {
@@ -105,26 +105,31 @@ public class Sort {
     }
 
     public static void main(String[] args) {
+        System.out.println("冒泡");
         int[] arr1 = {5, 4, 6, 8, 5, 4, 1, 8, 6};
         System.out.println(Arrays.toString(arr1));
         bubbleSort(arr1);
         System.out.println(Arrays.toString(arr1));
 
+        System.out.println("选择");
         int[] arr2 = {1, 7, 3, 2, 8, 1, 5, 3, 7, 1, 3, 78, 4, 6, 8, 9};
         System.out.println(Arrays.toString(arr2));
         selectSort(arr2);
         System.out.println(Arrays.toString(arr2));
 
+        System.out.println("插入");
         int[] arr3 = {4, 0, 5, 7, 3, 2, 89, 3, 6, 1};
         System.out.println(Arrays.toString(arr3));
         insertionSort(arr3);
         System.out.println(Arrays.toString(arr3));
 
+        System.out.println("希尔");
         int[] arr4 = {1, 2, 3, 71, 8, 65, 47, 7, 9, 8, 4, 1, 3, 2};
         System.out.println(Arrays.toString(arr4));
         shellSort(arr4);
         System.out.println(Arrays.toString(arr4));
 
+        System.out.println("快速");
         int[] arr5 = {7, 1, 3, 5, 87, 5, 8, 1, 4, 6};
         System.out.println(Arrays.toString(arr5));
         quickSort(arr5, 0, arr5.length - 1);
