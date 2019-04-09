@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Sort {
 
@@ -52,14 +50,14 @@ public class Sort {
 
     //**************************************************************//
     //4.希尔排序(改进直接插入排序)
-    static void xier(List<Integer> list) {
-        int n = list.size();
+    private static void shellSort(int[] arr) {
+        int n = arr.length;
         int increment = n;
         while (increment > 1) {
             increment = increment / 3 + 1;
             for (int i = 0; i + increment < n; i++) {
-                if (list.get(i + increment) < list.get(i)) {
-                    swap(list, i, i + increment);
+                if (arr[i + increment] < arr[i]) {
+                    swap(arr, i, i + increment);
                 }
             }
         }
@@ -83,7 +81,7 @@ public class Sort {
         int base = arr[start];
         int i = start;
         int j = stop;
-        while (i != j) {
+        while (true) {
             while (arr[j] >= base && j > i) {
                 j--;
             }
@@ -100,24 +98,7 @@ public class Sort {
         quickSort(arr, i + 1, stop);
     }
 
-    //创建数组
-    static List<Integer> createList(String string) {
-        List list = new ArrayList();
-        char[] chars = string.toCharArray();
-        for (char c : chars) {
-            list.add(Integer.parseInt(String.valueOf(c)));
-        }
-        return list;
-    }
-
-    //交换
-    static void swap(List<Integer> list, int i, int j) {
-        int temp = list.get(i);
-        list.set(i, list.get(j));
-        list.set(j, temp);
-    }
-
-    static void swap(int[] arr, int i, int j) {
+    private static void swap(int[] arr, int i, int j) {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
@@ -138,15 +119,15 @@ public class Sort {
         System.out.println(Arrays.toString(arr3));
         insertionSort(arr3);
         System.out.println(Arrays.toString(arr3));
-//
-//        list = createList("12371865477984132");
-//        System.out.println(list);
-//        xier(list);
-//        System.out.println(list);
-//
-        int[] arr5 = {7,1,3,5,87,5,8,1,4,6};
+
+        int[] arr4 = {1, 2, 3, 71, 8, 65, 47, 7, 9, 8, 4, 1, 3, 2};
+        System.out.println(Arrays.toString(arr4));
+        shellSort(arr4);
+        System.out.println(Arrays.toString(arr4));
+
+        int[] arr5 = {7, 1, 3, 5, 87, 5, 8, 1, 4, 6};
         System.out.println(Arrays.toString(arr5));
-        quickSort(arr5,0,arr5.length-1);
+        quickSort(arr5, 0, arr5.length - 1);
         System.out.println(Arrays.toString(arr5));
     }
 }
