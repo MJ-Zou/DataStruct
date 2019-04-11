@@ -1,3 +1,5 @@
+package DataStruct;
+
 import java.util.Arrays;
 
 public class Sort {

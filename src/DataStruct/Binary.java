@@ -1,3 +1,5 @@
+package DataStruct;
+
 import java.math.BigInteger;
 import java.util.*;
 

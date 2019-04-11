@@ -1,3 +1,5 @@
+package DataStruct;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
