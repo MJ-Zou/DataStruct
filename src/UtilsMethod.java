@@ -12,6 +12,8 @@ public class UtilsMethod {
 
         List<LinkedList<Integer>> list1 = new ArrayList<>();
         combine(ints, list1);
+        printNoSp(list1.toString());
+        printWithSp(list1.toString());
     }
 
     //带空格的字符串转数组
@@ -66,5 +68,19 @@ public class UtilsMethod {
         combine(chs, begin + 1, number - 1, list, comb);
         list.pop();
         combine(chs, begin + 1, number, list, comb);
+    }
+
+    //无空格输出列表/集合
+    private static void printNoSp(String s) {
+        s = s.replace(", ", "");
+        s = s.substring(1, s.length() - 1);
+        System.out.println(s);
+    }
+
+    //有空格输出列表/集合
+    private static void printWithSp(String s) {
+        s = s.replace(",", "");
+        s = s.substring(1, s.length() - 1);
+        System.out.println(s);
     }
 }
