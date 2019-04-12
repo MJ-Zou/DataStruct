@@ -1,7 +1,5 @@
 import java.util.*;
 
-
-//工具方法11
 public class UtilsMethod {
 
     public static void main(String[] args) {
