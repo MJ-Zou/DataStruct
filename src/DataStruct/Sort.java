@@ -51,29 +51,58 @@ public class Sort {
     }
 
     //**************************************************************//
-    //4.希尔排序(改进直接插入排序)有问题
+    //4.希尔排序(改进直接插入排序)
     private static void shellSort(int[] arr) {
         int n = arr.length;
-        int increment = n;
-        while (increment > 1) {
-            increment = increment / 3 + 1;
+        int increment = n / 2;
+        int j;
+        while (increment > 0) {
             for (int i = 0; i + increment < n; i++) {
-                if (arr[i + increment] < arr[i]) {
+                j = i;
+                while (j >= 0 && arr[j] > arr[j + increment]) {
                     swap(arr, i, i + increment);
+                    j = j - increment;
                 }
             }
+            increment = increment / 2;
         }
     }
 
-    /*
-    5.堆排序(改进选择排序)
-        大顶堆
-    */
-    /*
 
-    6.归并排序
-        二合一
-    */
+    // 5.堆排序(改进选择排序)
+    private static void heapSort(int[] arr) {
+
+    }
+
+
+    //6.归并排序
+    private static void mergingSort(int[] arr) {
+
+    }
+
+    //归并
+    private static void merging(int[] arr, int l, int m, int r) {
+        int len1 = m - l;
+        int len2 = r - m + 1;
+        int[] a = new int[len1];
+        int[] b = new int[len2];
+        System.arraycopy(arr, l, a, 0, len1);
+        System.arraycopy(arr, m, b, 0, len2);
+        int i = 0, j = 0, k = 0;
+        while (k < len1 + len2) {
+            try {
+                arr[l + k] = a[i] < b[j] ? a[i++] : b[j++];
+            } catch (Exception e) {
+                if (i == len1) {
+                    arr[l + k] = b[j++];
+                } else {
+                    arr[l + k] = a[i++];
+                }
+            } finally {
+                k++;
+            }
+        }
+    }
 
     //7.快速排序(改进冒泡排序)
     private static void quickSort(int[] arr, int start, int stop) {
@@ -131,10 +160,18 @@ public class Sort {
         shellSort(arr4);
         System.out.println(Arrays.toString(arr4));
 
+        System.out.println("归并");
+        int[] arr = {2, 8, 9, 10, 4, 5, 6, 7};
+        System.out.println(Arrays.toString(arr));
+        merging(arr, 0,4,7);
+        System.out.println(Arrays.toString(arr));
+
         System.out.println("快速");
         int[] arr5 = {7, 1, 3, 5, 87, 5, 8, 1, 4, 6};
         System.out.println(Arrays.toString(arr5));
         quickSort(arr5, 0, arr5.length - 1);
         System.out.println(Arrays.toString(arr5));
+
+
     }
 }
