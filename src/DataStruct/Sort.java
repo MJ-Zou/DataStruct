@@ -77,11 +77,24 @@ public class Sort {
 
     //6.归并排序
     private static void mergingSort(int[] arr) {
-
+        int len = arr.length;
+        int i;
+        int incre = 1;
+        while (incre < len) {
+            i = 0;
+            while (i + incre < len) {
+                merging(arr, i, i + incre, i + 2 * incre - 1);
+                i = i + 2 * incre;
+            }
+            incre *= 2;
+        }
     }
 
     //归并
     private static void merging(int[] arr, int l, int m, int r) {
+        if (r > arr.length) {
+            r = arr.length - 1;
+        }
         int len1 = m - l;
         int len2 = r - m + 1;
         int[] a = new int[len1];
@@ -161,9 +174,9 @@ public class Sort {
         System.out.println(Arrays.toString(arr4));
 
         System.out.println("归并");
-        int[] arr = {2, 8, 9, 10, 4, 5, 6, 7};
+        int[] arr = {0, 7, 8, 9, 8, 2, 1, 3, 4, 5, 0, 8};
         System.out.println(Arrays.toString(arr));
-        merging(arr, 0,4,7);
+        mergingSort(arr);
         System.out.println(Arrays.toString(arr));
 
         System.out.println("快速");
