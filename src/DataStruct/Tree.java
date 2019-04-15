@@ -9,10 +9,8 @@ public class Tree {
         Node left;//左子树结点
         Node right;//右子树结点
 
-        Node(String data, Node left, Node right) {
+        Node(String data) {
             this.data = data;
-            this.left = left;
-            this.right = right;
         }
     }
 
@@ -55,8 +53,7 @@ public class Tree {
         if (data.equals("*")) {
             return null;
         }
-        Node node = new Node(null, null, null);
-        node.data = data;
+        Node node = new Node(data);
         node.left = createTreeByPre();
         node.right = createTreeByPre();
         return node;
@@ -69,8 +66,7 @@ public class Tree {
         if (data.equals("*")) {
             return null;
         }
-        Node node = new Node(null, null, null);
-        node.data = data;
+        Node node = new Node(data);
         node.left = createTreeByPre(pre);
         node.right = createTreeByPre(pre);
         return node;
@@ -81,8 +77,7 @@ public class Tree {
         if (preStart > preStop || inStart > inStop) {
             return null;
         }
-        Node node = new Node(null, null, null);
-        node.data = pre[preStart];
+        Node node = new Node(pre[preStart]);
         for (int i = inStart; i <= inStop; i++) {
             if (in[i].equals(pre[preStart])) {
                 node.left = createTreeByPreAndIn(pre, preStart + 1, preStart + i - inStart, in, inStart, i - 1);
@@ -98,8 +93,7 @@ public class Tree {
         if (postStart > postStop || inStart > inStop) {
             return null;
         }
-        Node node = new Node(null, null, null);
-        node.data = post[postStop];
+        Node node = new Node(post[postStop]);
         for (int i = inStart; i <= inStop; i++) {
             if (in[i].equals(post[postStop])) {
                 node.left = createTreeByPostAndIn(post, postStart, postStart + i - inStart - 1, in, inStart, i - 1);
@@ -111,29 +105,13 @@ public class Tree {
     }
 
     public static void main(String[] args) {
-        Node n1 = new Node("G", null, null);
-        Node n2 = new Node("H", null, null);
-        Node n3 = new Node("D", n1, n2);
-        Node n4 = new Node("B", n3, null);
-        Node n5 = new Node("I", null, null);
-        Node n6 = new Node("E", null, n5);
-        Node n7 = new Node("F", null, null);
-        Node n8 = new Node("C", n6, n7);
-        Node n9 = new Node("A", n4, n8);
-        System.out.println("中序遍历");
-        infixOrder(n9);
-        System.out.println("\n前序遍历");
-        preOrder(n9);
-        System.out.println("\n后序遍历");
-        postOrder(n9);
-
-        System.out.println("\n\n扩展二叉树前序遍历生成二叉树");
+        System.out.println("扩展二叉树前序遍历生成二叉树");
         String[] arr = {"a", "b", "*", "d", "*", "*", "c", "*", "*"};
         Node tree = createTreeByPre(arr);
-        preOrder(tree);
+        infixOrder(tree);
         System.out.println("\n扩展二叉树前序遍历生成二叉树");
         tree = createTreeByPre();
-        preOrder(tree);
+        infixOrder(tree);
 
         String[] pre = {"1", "2", "3", "4", "5", "6", "7"};
         String[] in = {"3", "2", "4", "1", "6", "5", "7"};
