@@ -1,22 +1,19 @@
 package DataStruct;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Tree {
     //二叉树的结点
     static public class Node {
         String data;//结点值
-        Node leftChild;//左子树结点
-        Node rightChild;//右子树结点
+        Node left;//左子树结点
+        Node right;//右子树结点
 
-        Node(String data, Node leftChild, Node rightChild) {
+        Node(String data, Node left, Node right) {
             this.data = data;
-            this.leftChild = leftChild;
-            this.rightChild = rightChild;
+            this.left = left;
+            this.right = right;
         }
     }
 
@@ -27,8 +24,8 @@ public class Tree {
             return;
         }
         System.out.print(node.data);
-        preOrder(node.leftChild);
-        preOrder(node.rightChild);
+        preOrder(node.left);
+        preOrder(node.right);
     }
 
     //中序遍历
@@ -36,9 +33,9 @@ public class Tree {
         if (node == null) {
             return;
         }
-        infixOrder(node.leftChild);
+        infixOrder(node.left);
         System.out.print(node.data);
-        infixOrder(node.rightChild);
+        infixOrder(node.right);
 
     }
 
@@ -47,15 +44,13 @@ public class Tree {
         if (node == null) {
             return;
         }
-        postOrder(node.leftChild);
-        postOrder(node.rightChild);
+        postOrder(node.left);
+        postOrder(node.right);
         System.out.print(node.data);
     }
-    //*******************************生成*****************************//
 
-    /**
-     * 根据扩展二叉树的前序遍历生成二叉树
-     */
+    //*******************************生成*****************************//
+    //根据扩展二叉树的前序遍历生成二叉树
     private static Node createTreeByPre(LinkedList<String> list) {
         Node node = new Node(null, null, null);
 //        Scanner scanner = new Scanner(System.in);
@@ -68,66 +63,45 @@ public class Tree {
             // createTreeByPre();
         } else {
             node.data = data;
-            node.leftChild = createTreeByPre(list);
-            node.rightChild = createTreeByPre(list);
+            node.left = createTreeByPre(list);
+            node.right = createTreeByPre(list);
         }
         return node;
     }
 
-    private static Node createTreeByPre(String[] arr, int i) {
-        Node node = new Node(null, null, null);
-        String data = arr[i];
-        i++;
-        if (data.equals("*")) {
-            node = null;
-        } else {
-            node.data = data;
-            node.leftChild = createTreeByPre(arr, i);
-            node.rightChild = createTreeByPre(arr, i);
-        }
-        return node;
-    }
-
-    /**
-     * 根据前序、中序遍历生成二叉树
-     */
-    private static Node createTreeByPreAndIn(List<String> pre, List<String> in) {
-        Node node = new Node(null, null, null);
-        if (pre.isEmpty() || in.isEmpty()) {
+    //根据前序、中序遍历生成二叉树
+    private static Node createTreeByPreAndIn(String[] pre, int preStart, int preStop, String[] in, int inStart, int inStop) {
+        if (preStart > preStop || inStart > inStop) {
             return null;
         }
-        node.data = pre.get(0);
-        int i = in.indexOf(node.data);
-        pre.remove(0);
-        if (i == -1) {
-            node.leftChild = null;
-        } else {
-            node.leftChild = createTreeByPreAndIn(pre, in.subList(0, i));
+        Node node = new Node(null, null, null);
+        node.data = pre[preStart];
+        for (int i = inStart; i <= inStop; i++) {
+            if (in[i].equals(pre[preStart])) {
+                node.left = createTreeByPreAndIn(pre, preStart + 1, preStart + i - inStart, in, inStart, i - 1);
+                node.right = createTreeByPreAndIn(pre, preStart + i - inStart + 1, preStop, in, i + 1, inStop);
+                break;
+            }
         }
-        node.rightChild = createTreeByPreAndIn(pre, in.subList(i + 1, in.size()));
         return node;
     }
 
-    /**
-     * 根据后序、中序遍历生成二叉树
-     */
-    private static Node createTreeByPostAndIn(List<String> post, List<String> in) {
-        Node node = new Node(null, null, null);
-        if (post.isEmpty() || in.isEmpty()) {
+    //根据后序、中序遍历生成二叉树
+    private static Node createTreeByPostAndIn(String[] post, int postStart, int postStop, String[] in, int inStart, int inStop) {
+        if (postStart > postStop || inStart > inStop) {
             return null;
         }
-        node.data = post.get(post.size() - 1);
-        int i = in.indexOf(node.data);
-        post.remove(post.size() - 1);
-        node.rightChild = createTreeByPostAndIn(post, in.subList(i + 1, in.size()));
-        if (i == -1) {
-            node.leftChild = null;
-        } else {
-            node.leftChild = createTreeByPostAndIn(post, in.subList(0, i));
+        Node node = new Node(null, null, null);
+        node.data = post[postStop];
+        for (int i = inStart; i <= inStop; i++) {
+            if (in[i].equals(post[postStop])) {
+                node.left = createTreeByPostAndIn(post, postStart, postStart + i - inStart-1, in, inStart, i - 1);
+                node.right = createTreeByPostAndIn(post, postStart + i - inStart , postStop - 1, in, i + 1, inStop);
+                break;
+            }
         }
         return node;
     }
-
 
     //*******************************工具*****************************//
 
@@ -143,13 +117,13 @@ public class Tree {
         return a;
     }
 
-    static LinkedList<String> list = new LinkedList<>();
-    static List<String> list1 = new ArrayList<>();
-    static List<String> list2 = new ArrayList<>();
+    private static LinkedList<String> list = new LinkedList<>();
+    private static List<String> list1 = new ArrayList<>();
+    private static List<String> list2 = new ArrayList<>();
 
     //************************************************************//
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         //*********手动创建一棵树********
         Node n1 = new Node("G", null, null);
         Node n2 = new Node("H", null, null);
@@ -181,29 +155,16 @@ public class Tree {
         System.out.println();
         postOrder(tree);
 
+        String[] pre = {"1", "2", "3", "4", "5", "6", "7"};
+        String[] in = {"3", "2", "4", "1", "6", "5", "7"};
+        String[] post = {"3", "4", "2", "6", "7", "5", "1"};
         System.out.println("\n\n根据前序、中序遍历生成二叉树");
-        list1 = createList("1234567");
-        list2 = createList("3241657");
-        tree = createTreeByPreAndIn(list1, list2);
-        preOrder(tree);
-        System.out.println();
-        infixOrder(tree);
-        System.out.println();
+        tree = createTreeByPreAndIn(pre, 0, pre.length - 1, in, 0, in.length - 1);
         postOrder(tree);
-
-        System.out.println("\n\n根据后序、中序遍历生成二叉树");
-        list1 = createList("cbefda");
-        list2 = createList("cbaedf");
-        tree = createTreeByPostAndIn(list1, list2);
+        System.out.println("\n根据后序、中序遍历生成二叉树");
+        tree = createTreeByPostAndIn(post, 0, post.length - 1, in, 0, in.length - 1);
         preOrder(tree);
-        System.out.println();
-        infixOrder(tree);
-        System.out.println();
-        postOrder(tree);
 
 
-        String[] arr = {"a", "b", "*", "d", "*", "*", "c", "*", "*"};
-        tree = createTreeByPre(arr, 0);
-        preOrder(tree);
     }
 }
