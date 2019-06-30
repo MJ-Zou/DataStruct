@@ -1,4 +1,4 @@
-package Netease;
+package Test;
 
 import java.util.*;
 

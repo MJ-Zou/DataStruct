@@ -1,8 +1,8 @@
-package Huawei;
+package Test;
 
 import java.util.*;
 
-public class Main2 {
+public class Huawei2 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         List<String> input = new ArrayList<>();
