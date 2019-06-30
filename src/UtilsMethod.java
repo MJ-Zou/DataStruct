@@ -9,6 +9,7 @@ public class UtilsMethod {
 
         List<int[]> list = new ArrayList<>();
         allSort(ints, 0, ints.length - 1, list);
+        printWithSp(list.toString());
 
         List<LinkedList<Integer>> list1 = new ArrayList<>();
         combine(ints, list1);
